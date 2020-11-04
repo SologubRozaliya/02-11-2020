@@ -1,0 +1,508 @@
+{
+	"info": {
+		"_postman_id": "c5ce7cbf-16eb-4187-8772-ce3d1916da84",
+		"name": "23/09/2020",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4d4bcb7f-d2eb-4b5b-9e94-5c766deb1f1b",
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);\r",
+							"//postman.setEnvironmentVariable(\"token\",jsonData.token);\r",
+							"\r",
+							"pm.environment.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "login",
+							"value": "Solor",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "A1b2C3g4D5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://vks1host.pythonanywhere.com/login",
+					"protocol": "http",
+					"host": [
+						"vks1host",
+						"pythonanywhere",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "curr",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "589b2369-96a9-4d1c-8ee9-6c14265eb2d2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is json\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"var jsonData=JSON.parse(responseBody);\r",
+							"var randomID = Math.floor(Math.random() * jsonData.length);\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"CURR_ID\", jsonData[randomID].Cur_ID);\r",
+							"\r",
+							"console.log(randomID);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "login",
+							"value": "Solor",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "A1b2C3g4D5",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://vks1host.pythonanywhere.com/currency",
+					"protocol": "http",
+					"host": [
+						"vks1host",
+						"pythonanywhere",
+						"com"
+					],
+					"path": [
+						"currency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "58aafd41-4a7a-4187-95be-27133d974b74",
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);\r",
+							"pm.environment.set(\"salary_15\", jsonData.person.u_salary_1_5_year);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is json\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Salary_test_6\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var salary =jsonData.person.u_name[1];\r",
+							"    var after6 = jsonData.qa_salary_after_6_months;\r",
+							"    pm.expect(after6).to.eql(salary * 2);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Salary_test_12\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var salary =jsonData.person.u_name[1];\r",
+							"    var after12 = jsonData.qa_salary_after_12_months;\r",
+							"    pm.expect(after12).to.eql(salary * 2.9);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Salary_test_1,5\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var salary =jsonData.person.u_name[1];\r",
+							"    var after15 = jsonData.person.u_salary_1_5_year;\r",
+							"    pm.expect(after15).to.eql(salary * 4);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "37",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "50000",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Rosa",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://vks1host.pythonanywhere.com/user_info",
+					"protocol": "http",
+					"host": [
+						"vks1host",
+						"pythonanywhere",
+						"com"
+					],
+					"path": [
+						"user_info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new_data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f6b196b0-2048-469d-b6d0-1bd77233f251",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is json\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Salary_test_2\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var salary =jsonData.salary[0];\r",
+							"    var after2 = Number(jsonData.salary[1]);\r",
+							"    pm.expect(after2).to.eql(salary * 2);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Salary_test_3\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var salary =jsonData.salary[0];\r",
+							"    var after3 = Number(jsonData.salary[2]);\r",
+							"    pm.expect(after3).to.eql(salary * 3);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Salary_test_sravnenie\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var salary =jsonData.salary[0];\r",
+							"    var after2 = Number(jsonData.salary[1]);\r",
+							"    var after3 = Number(jsonData.salary[2]);\r",
+							"    pm.expect(after3).to.be.above(salary).and.to.be.above(after2);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "37",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "50000",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Alex",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://vks1host.pythonanywhere.com/new_data",
+					"protocol": "http",
+					"host": [
+						"vks1host",
+						"pythonanywhere",
+						"com"
+					],
+					"path": [
+						"new_data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "curr_byn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "30bebf2e-b537-4fb6-a97d-fc7de1ed60ce",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is json\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "curr_code",
+							"value": "{{CURR_ID}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://vks1host.pythonanywhere.com/curr_byn",
+					"protocol": "http",
+					"host": [
+						"vks1host",
+						"pythonanywhere",
+						"com"
+					],
+					"path": [
+						"curr_byn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_test_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0c05a484-eed6-447b-8766-52cb0f49edfc",
+						"exec": [
+							"pm.environment.set(\"u_name\", \"Sasha\");\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is json\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Name_test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var name_1 =jsonData.name;\r",
+							"       pm.expect(name_1).to.eql(pm.environment.get(\"u_name\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"age\", \"35\");\r",
+							"pm.test(\"Name_age\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var age_1 =jsonData.age;\r",
+							"       pm.expect(age_1).to.eql(pm.environment.get(\"age\"));\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary_15}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Sasha",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://vks1host.pythonanywhere.com/get_test_user",
+					"protocol": "http",
+					"host": [
+						"vks1host",
+						"pythonanywhere",
+						"com"
+					],
+					"path": [
+						"get_test_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test_pet_info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3855e85e-f355-4eec-b170-0514fba8172b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is json\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Weight_food\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var weight = request.data.weight;\r",
+							"    var dailyFood =jsonData.daily_food;\r",
+							"    pm.expect(dailyFood).to.eql(weight * 0.012);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Weight_sleep\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"   var weight = request.data.weight;\r",
+							"    var dailySleep =jsonData.daily_sleep;\r",
+							"    pm.expect(dailySleep).to.eql(weight * 2.5);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "weight",
+							"value": "56",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Sasha",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://vks1host.pythonanywhere.com/test_pet_info",
+					"protocol": "http",
+					"host": [
+						"vks1host",
+						"pythonanywhere",
+						"com"
+					],
+					"path": [
+						"test_pet_info"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
